@@ -1,7 +1,7 @@
 {% extends 'base.html'%}
 
 {% block page_title %} Receipts {% endblock %}
-
+{% block custom_css %}"{{ url_for('static',filename='styles/estilos_receipts.css') }}"{% endblock %}
 {% block jumbotron_title %}Receipts parser{% endblock %}
 {% block jumbotron_description %}Receipt Parser with DocAI{% endblock %}
 

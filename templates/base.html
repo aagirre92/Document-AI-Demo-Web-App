@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
 
     <!-- Custom CSS  -->
-    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/estilos.css') }}">
+    <link rel= "stylesheet" type= "text/css" href= {% block custom_css %}{% endblock %}>
 
     <!-- Favicon (docai)  -->
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">

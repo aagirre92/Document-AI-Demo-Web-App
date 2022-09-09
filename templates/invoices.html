@@ -1,10 +1,55 @@
 {% extends 'base.html'%}
 
 {% block page_title %} Invoices {% endblock %}
-
+{% block custom_css %}"{{ url_for('static',filename='styles/estilos_invoices.css') }}"{% endblock %}
 {% block jumbotron_title %}Invoice parser{% endblock %}
 {% block jumbotron_description %}Invoice Parser with DocAI{% endblock %}
 
 {% block body %}
+<form action="" id="form_invoice" method="POST" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="invoiceFile">Upload invoice</label>
+        <input type="file" class="form-control-file" id="invoiceFile" name="invoiceFile">
+      </div>   
+    <button id="boton" type="submit" class="btn btn-primary">Process</button>
+  </form>
 
+<div id="response">
+    
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+    $(document).ready(function(){
+        $("#form_invoice").submit(function(e){
+            e.preventDefault();
+            $('#boton').prop("disabled",true);
+            $('#boton').html(
+          `<span id="spinner" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Uploading file to DocAI...`
+        );            
+            var data = new FormData(this)
+            $.ajax({
+                url: 'r_invoice.html',
+                type: 'POST',
+                data: data,
+                contentType: false,
+                cache: false,
+                processData: false,
+                success: function(datos){
+
+                    $('#response').html(datos);
+                    $('#response table').addClass("table")
+                    $('#response table thead').addClass("thead-light")
+                    $('#response table  tr').removeAttr("style")
+                    $("#spinner").remove()
+                    $("#boton").text("Process")
+                    $('#boton').prop("disabled",false);
+
+
+                }
+            })
+        })
+    })
+</script>
 {% endblock %}

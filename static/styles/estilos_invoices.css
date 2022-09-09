@@ -1,0 +1,12 @@
+
+form{
+    padding: 20px;
+}
+
+#response{
+    padding: 20px;
+}
+
+table > tbody > tr > td:first-child{
+    font-weight: bold;
+}
