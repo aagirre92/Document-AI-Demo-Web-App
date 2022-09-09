@@ -1,0 +1,45 @@
+{% extends 'base.html'%}
+
+{% block page_title %} Receipts {% endblock %}
+
+{% block jumbotron_title %}Receipts parser{% endblock %}
+{% block jumbotron_description %}Receipt Parser with DocAI{% endblock %}
+
+{% block body %}
+<form action="receipts.html" id="form_receipt" method="POST" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="receiptFile">Upload receipt</label>
+        <input type="file" class="form-control-file" id="receiptFile" name="receiptFile">
+      </div>   
+    <button type="submit" class="btn btn-primary">Process</button>
+  </form>
+
+<div id="response">
+    
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+    $(document).ready(function(){
+        $("#form_receipt").submit(function(e){
+            e.preventDefault();
+            var data = new FormData(this)
+            $.ajax({
+                url: 'r_receipts.html',
+                type: 'POST',
+                data: data,
+                contentType: false,
+                cache: false,
+                processData: false,
+                success: function(datos){
+
+                    $('#response').html(datos);
+                }
+            })
+        })
+    })
+</script>
+{% endblock %}
+
+
