@@ -3,7 +3,7 @@ from google.cloud import documentai_v1beta3 as documentai
 import pandas as pd
 import config as cfg
 
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = cfg.PRIVATE_JSON_KEY_PATH
+#os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = cfg.PRIVATE_JSON_KEY_PATH
 
 # RECEIPTS
 ALLOWED_EXTENSIONS_RECEIPTS = {'png', 'jpg', 'jpeg'}
