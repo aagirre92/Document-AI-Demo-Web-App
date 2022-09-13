@@ -21,8 +21,18 @@ ALLOWED_EXTENSIONS_INVOICES = {'tiff', 'pdf'}
 def allowed_files_invoices(filename):
     return '.' in filename and filename.rsplit('.',1)[1].lower() in ALLOWED_EXTENSIONS_INVOICES
 
+def check_line_items_sum(df_line_items:pd.DataFrame):
+    # todo
+    pass
+
+def look_for_field_df(df,field_name):
+    return df[df["Field"]== field_name]["Normalization"].iloc[0] if len(df[df["Field"]== field_name]["Normalization"]) != 0 and df[df["Field"]== field_name]["Normalization"].iloc[0] != 'n/a'  else "Not found"
+
 def process_document_sample(invoice,mime_type):
-    # Instantiates a client
+    """
+    Function that uploads the invoice to DocAI and retrieves the document field of the json response
+    """
+    # Instantiate a client
     client_options = {"api_endpoint": "{}-documentai.googleapis.com".format(cfg.LOCATION)}
     client = documentai.DocumentProcessorServiceClient(client_options=client_options)
 
@@ -51,6 +61,10 @@ def process_document_sample(invoice,mime_type):
     return document
 
 def transform_output_to_table(doc):
+    """
+    Function that manipulates the document response and returns two html tables containing the
+    field and line items
+    """
     entity_types=[]
     entity_text=[]
     entity_confidence=[]
@@ -75,5 +89,30 @@ def transform_output_to_table(doc):
     df = pd.DataFrame({"Field":entity_types,"Extraction":entity_text,"Normalization":entity_norm_value,"Confidence":entity_confidence})
     df1_html = df[~ df['Field'].str.contains("line_item")].to_html(index=False) # field items
     df2_html = df[df['Field'].str.contains("line_item")].to_html(index=False)   # line items
-    df_tables = df1_html + df2_html
-    return df_tables
+    
+    # Construct ul-li for some fields
+    field_names = {
+    "Total Amount": look_for_field_df(df,"total_amount"),
+    "Net Amount": look_for_field_df(df,"net_amount"),
+    "Currency":look_for_field_df(df,"currency"),
+    }
+
+    ul_li_html = "<ul class='list-group'>"
+    for key,value in field_names.items():
+        if value != "Not found":
+            ul_li_html += "<li class='list-group-item list-group-item-info'>" + key + ": " + value + "</li>"
+    ul_li_html += "</ul>"
+
+    # Check if the sum of the line item a mount corresponds to the invoice total:
+    line_item_amount_sum = round(pd.to_numeric(df[df["Field"] == "line_item/amount"]["Normalization"]).sum(),2)
+    line_item_amount_html = f"""
+    <div class='alert alert-info'>
+    <strong>Info:</strong> Line item amount sum is {line_item_amount_sum}
+    </div>
+
+    """
+    html_output = ul_li_html + line_item_amount_html + df1_html + df2_html
+    # TODO return the tables and a list stating the total amount (con y sin iva) and check if the sum of
+    # line item amount correspond to the total net amount
+    # ADD CLOUD IAP for authentication! (si no tengo permisos usar una VM interna y ya)
+    return html_output
