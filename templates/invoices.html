@@ -3,13 +3,13 @@
 {% block page_title %} Invoices {% endblock %}
 {% block custom_css %}"{{ url_for('static',filename='styles/estilos.css') }}"{% endblock %}
 {% block jumbotron_title %}Invoice parser{% endblock %}
-{% block jumbotron_description %}Invoice Parser with DocAI{% endblock %}
+{% block jumbotron_description %}<b>Invoice Parser with DocAI</b> (bear in mind that relatively complex invoice layouts won't be extracted properly, caution is advised){% endblock %}
 
 {% block body %}
 <form action="" class="card bg-light" id="form_invoice" method="POST" enctype="multipart/form-data">
     <div class="form-group">
         <label for="invoiceFile">Upload invoice</label>
-        <input type="file" class="form-control-file" id="invoiceFile" name="invoiceFile">
+        <input type="file" class="form-control-file" id="invoiceFile" name="invoiceFile" accept=".pdf,.tiff">
       </div>   
     <button id="boton" type="submit" class="btn btn-primary">Process</button>
   </form>

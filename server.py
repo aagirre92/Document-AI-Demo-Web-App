@@ -36,7 +36,7 @@ def r_invoice():
         html_table = f.transform_output_to_table(document)
         return html_table
     else:
-        return "Not a valid file"
+        return "Not a valid file, try again"
 
 # RECEIPTS
 @app.route('/r_receipts.html',methods=["POST"])
@@ -53,7 +53,7 @@ def r_receipt():
         # HERE GOES THE PAYLOAD
         return filename
     else:
-        return "Not a valid file"
+        return "Not a valid file, try again"
 
 if __name__ == '__main__':
     app.run(host='localhost',port=80,debug=True)
