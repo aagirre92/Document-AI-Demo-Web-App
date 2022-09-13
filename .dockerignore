@@ -1,0 +1,4 @@
+/venv
+credentials.json
+config.py
+*.tar

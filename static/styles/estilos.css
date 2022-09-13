@@ -1,0 +1,48 @@
+/*Estilos comunes*/
+
+body {
+  height: 100vh;
+  margin: 0 auto;
+  width: 90%;
+}
+
+header {
+  min-height: 50px;
+  background: lightcyan;
+}
+footer {
+  min-height: 50px;
+  background: PapayaWhip;
+}
+
+/* Trick */
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+footer {
+  margin-top: auto;
+}
+
+/*Estilos para el invoice.html*/
+form {
+  padding: 20px;
+  /*margin: 20px;*/
+}
+
+#response {
+  padding-top: 20px;
+}
+
+#response ul {
+  padding-bottom: 20px;
+}
+
+#response ul li {
+  font-weight: bold;
+}
+
+table > tbody > tr > td:first-child {
+  font-weight: bold;
+}
