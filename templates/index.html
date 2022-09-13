@@ -1,14 +1,9 @@
-{% extends 'base.html'%}
-
-{% block page_title %} Main {% endblock %}
-{% block custom_css %}"{{ url_for('static',filename='styles/estilos.css') }}"{% endblock %}
-
-{% block jumbotron_title %}Main{% endblock %}
-{% block jumbotron_description %}Document Parser with DocAI{% endblock %}
-
-{% block body %}
+{% extends 'base.html'%} {% block page_title %} Main {% endblock %} {% block
+custom_css %}"{{ url_for('static',filename='styles/estilos.css') }}"{% endblock
+%} {% block jumbotron_title %}Main{% endblock %} {% block jumbotron_description
+%}Document Parser with DocAI{% endblock %} {% block body %}
 <ul>
-    <li><a href="invoices.html">Invoices</a></li>
-    <li><a href="receipts.html">Receipts</a></li>
+  <li><a href="invoices.html">Invoices</a></li>
+  <!--<li><a href="receipts.html">Receipts</a></li>-->
 </ul>
 {% endblock %}
